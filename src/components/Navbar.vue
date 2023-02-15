@@ -3,36 +3,34 @@
   <div>
     <b-navbar id="nav" toggleable="lg" type="dark">
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-      <b-navbar-nav class="ml-auto">
-        <b-collapse id="nav-collapse" is-nav>
-          <!-- Display the links to other pages -->
-          <b-navbar-nav>
-            <b-nav-item :active="$route.name == 'Main'">
-              <b-link to="/gcs/main">
-                <span class="nav-item-text">Main</span>
-              </b-link>
-            </b-nav-item>
-            <b-nav-item :active="$route.name == 'MAC'">
-              <b-link to="/gcs/mac">
-                <span class="nav-item-text">MAC</span>
-              </b-link>
-            </b-nav-item>
-            <b-nav-item :active="$route.name == 'ERU'">
-              <b-link to="/gcs/eru">
-                <span class="nav-item-text">ERU</span>
-              </b-link>
-            </b-nav-item>
-            <b-nav-item :active="$route.name == 'MEA'">
-              <b-link to="/gcs/mea">
-                <span class="nav-item-text">MEA</span>
-              </b-link>
-            </b-nav-item>
-            <!-- <b-nav-item :active="$route.name == 'Form'">
+      <b-collapse id="nav-collapse" is-nav>
+        <!-- Display the links to other pages -->
+        <b-navbar-nav fill class="w-100">
+          <b-nav-item :active="$route.name == 'Main'">
+            <b-link to="/gcs/main">
+              <span class="nav-item-text">Main</span>
+            </b-link>
+          </b-nav-item>
+          <b-nav-item :active="$route.name == 'MAC'">
+            <b-link to="/gcs/mac">
+              <span class="nav-item-text">MAC</span>
+            </b-link>
+          </b-nav-item>
+          <b-nav-item :active="$route.name == 'ERU'">
+            <b-link to="/gcs/eru">
+              <span class="nav-item-text">ERU</span>
+            </b-link>
+          </b-nav-item>
+          <b-nav-item :active="$route.name == 'MEA'">
+            <b-link to="/gcs/mea" class="change-background">
+              <span class="nav-item-text">MEA</span>
+            </b-link>
+          </b-nav-item>
+          <!-- <b-nav-item :active="$route.name == 'Form'">
               <b-link to="/form">Form</b-link>
             </b-nav-item> -->
-          </b-navbar-nav>
-        </b-collapse>
-      </b-navbar-nav>
+        </b-navbar-nav>
+      </b-collapse>
     </b-navbar>
     <router-view></router-view>
   </div>
@@ -47,9 +45,8 @@ export default defineComponent({});
 #nav {
   background-color: #011949;
   padding: 8px;
-  width: 55%;
-  /* width: 650px; */
-  height: 8vh;
+  width: 50%;
+  height: 59px;
 }
 
 .nav-item-text {
@@ -58,27 +55,31 @@ export default defineComponent({});
   font-weight: 300;
   font-size: 20px;
   line-height: 39px;
+  color: #ffffff !important;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   text-align: center;
 
-  color: #ffffff !important;
-  padding: 8px 20px;
-
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 9px 30px;
 }
 
 .nav-item-text:hover {
   background: #595866;
 }
 
-/deep/ a {
+a.router-link-active > .nav-item-text {
+  background: #595866 !important;
+}
+
+:deep(a) {
   text-decoration: none !important;
 }
 
-li {
-  padding: 0px 10px;
-  margin: 15px 9px 10px 9px;
-  color: rgb(226, 226, 226);
-  font-weight: 200;
+:deep(.nav-fill .nav-item .nav-link, .nav-justified .nav-item .nav-link) {
+  cursor: default;
+}
+
+ul {
+  margin: 10px 9px 10px -20px;
 }
 </style>
