@@ -1,8 +1,8 @@
 <template>
   <div
-    id="custom-div"
-    @mouseleave="showNavbar = false"
-    @mouseenter="showNavbar = true"
+    class="custom-div"
+    @mouseleave="show = false"
+    @mouseenter="show = true"
   ></div>
   <!-- If there is no fixed="top" in <b-navbar> there will be a white space where navbar should be-->
   <!-- Also add v-show="showNavbar" in <b-navbar> if wanting to work with disappearing navbar-->
@@ -10,10 +10,10 @@
     id="nav"
     toggleable="lg"
     type="dark"
-    v-if="showNavbar"
     fixed="top"
-    @mouseleave="showNavbar = false"
-    @mouseenter="showNavbar = true"
+    @mouseleave="show = false"
+    @mouseenter="show = true"
+    :class="{ show: show }"
   >
     <b-navbar-toggle
       target="nav-collapse"
@@ -53,17 +53,17 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   data() {
     return {
-      showNavbar: false,
+      show: true,
     };
   },
 });
 </script>
 
 <style scoped>
-#custom-div {
+.custom-div {
   width: 50%;
   background-color: transparent !important;
-  height: 130px;
+  height: 200px;
   top: 0;
   position: absolute;
   z-index: 5;
@@ -80,6 +80,13 @@ export default defineComponent({
   width: 50%;
   height: 59px;
   z-index: 5;
+  position: absolute;
+  transition: all 0.2s ease;
+  transform: translateY(-100%);
+}
+
+.show {
+  transform: translateY(0) !important;
 }
 
 .nav-item-text {
