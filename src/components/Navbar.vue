@@ -63,7 +63,7 @@ export default defineComponent({
 .custom-div {
   width: 50%;
   background-color: transparent !important;
-  height: 200px;
+  height: 140px;
   top: 0;
   position: absolute;
   z-index: 5;
