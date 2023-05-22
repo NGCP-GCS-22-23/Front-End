@@ -21,6 +21,11 @@
     ></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav fill class="w-100">
+      <b-nav-item :active="$route.name == 'Back'">
+          <b-link to="/">
+            <span class="nav-item-text">Back</span>
+          </b-link>
+        </b-nav-item>
         <b-nav-item :active="$route.name == 'Main'">
           <b-link to="/gcs/main">
             <span class="nav-item-text">Main</span>
