@@ -4,7 +4,7 @@
         <!-- button to open modal -->
         <b-button class="stage-selection-button" style="font-weight: bold" @click="sModalShow = !sModalShow"
             variant="primary">{{ "STAGE SELECTION" }}
-            <b-img style="padding-left: 6px; width: 32px; color: #ffffff" src="@/assets/select.png"></b-img>
+            <b-img style="padding-left: 6px; width: 32px; color: #ffffff" src="/assets/select.png"></b-img>
         </b-button>
 
         <!-- dynamic title -->

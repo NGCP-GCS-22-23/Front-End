@@ -4,7 +4,7 @@
             <b-button class="emergency-button" style="font-weight: bold" @click="eModalShow = !eModalShow"
                 variant="danger">
                 EMERGENCY STOP ALL VEHICLES
-                <b-img style="padding-left: 5px; width: 42px; color: #ffffff" src="@/assets/stop.png">
+                <b-img style="padding-left: 5px; width: 42px; color: #ffffff" src="/assets/stop.png">
                 </b-img>
             </b-button>
         </b-container>

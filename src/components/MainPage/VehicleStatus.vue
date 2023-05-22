@@ -31,13 +31,14 @@
             <!-- bottom row -->
             <b-row>
                 <!-- bottom left -->
-                <b-col cols="6">
+                <b-col cols="">
                     <StageSelection :vehicleName="vehicleName" :missionData="missionData" :vehicleData="vehicleData" />
                 </b-col>
                 <!-- bottom right -->
                 <b-col>
                     <EmergencyStop :vehicleName="vehicleName" />
                 </b-col>
+                
             </b-row>
         </b-card>
     </b-container>

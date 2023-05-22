@@ -3,7 +3,7 @@
 	<div>
 		<b-navbar id="nav" toggleable="lg" type="dark">
 			<!-- Display NGCP logo -->
-			<b-img style="width: 75px; padding-left: 15px;" src="@/assets/ngcp.png"></b-img>
+			<b-img style="width: 75px; padding-left: 15px;" src="/assets/ngcp.png"></b-img>
 			<div class="nav-title">Ground Control Station</div>
 			<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 			<b-navbar-nav class="ml-auto">
