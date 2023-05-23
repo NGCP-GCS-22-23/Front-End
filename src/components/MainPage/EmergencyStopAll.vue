@@ -1,10 +1,10 @@
 <template>
     <div>
         <b-container class="emergency-button-container">
-            <b-button class="emergency-button" style="font-weight: bold" @click="eModalShow = !eModalShow"
+            <b-button class="emergency-button" style="padding: 5px 10px;" @click="eModalShow = !eModalShow"
                 variant="danger">
-                EMERGENCY STOP ALL VEHICLES
-                <b-img style="padding-left: 5px; width: 42px; color: #ffffff" src="/assets/stop.png">
+                STOP ALL
+                <b-img style="width: 42px; color: #ffffff" src="/assets/stop.png">
                 </b-img>
             </b-button>
         </b-container>
@@ -108,7 +108,6 @@ export default {
 }
 
 .emergency-button {
-    /* width: 100%; */
-    height: 50px;
+
 }
 </style>

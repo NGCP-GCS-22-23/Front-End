@@ -2,9 +2,9 @@
 <template>
     <div>
         <!-- button to open modal -->
-        <b-button class="stage-selection-button" style="font-weight: bold" @click="sModalShow = !sModalShow"
-            variant="primary">{{ "STAGE SELECTION" }}
-            <b-img style="padding-left: 6px; width: 32px; color: #ffffff" src="/assets/select.png"></b-img>
+        <b-button class="stage-selection-button" style="padding: 5px 10px;" @click="sModalShow = !sModalShow"
+            variant="primary">{{ "STAGE" }}
+            <b-img style="width: 24px; color: #ffffff" src="/assets/select.png"></b-img>
         </b-button>
 
         <!-- dynamic title -->
@@ -133,7 +133,6 @@ export default defineComponent({
 
 <style scoped>
 .stage-selection-button {
-    width: 230px;
-    height: 50px;
+    height: 41px;
 }
 </style>

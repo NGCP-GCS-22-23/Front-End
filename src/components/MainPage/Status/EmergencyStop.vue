@@ -1,8 +1,8 @@
 <template>
     <div>
-        <b-button class="emergency-button" style="font-weight: bold" @click="eModalShow = !eModalShow" variant="danger">
-            EMERGENCY STOP
-            <b-img style="padding-left: 5px; width: 42px; color: #ffffff" src="/assets/stop.png"></b-img>
+        <b-button class="emergency-button" style="padding: 5px 10px;" @click="eModalShow = !eModalShow" variant="danger">
+            STOP
+            <b-img style="width: 30px; color: #ffffff" src="/assets/stop.png"></b-img>
         </b-button>
         <b-modal centered v-model="eModalShow" hide-footer title="Emergency Stop">
             <h3>Send Emergency Stop Command?</h3>
@@ -62,7 +62,6 @@ export default {
 
 <style scoped>
 .emergency-button {
-    width: 230px;
-    height: 50px;
+    height: 41px;
 }
 </style>

@@ -30,19 +30,19 @@
               >
                 <b-button
                   @click="renderSidebar = !renderSidebar"
-                  style="
-                    padding: 0%;
+                  style=" padding: 0%;
                     background-color: transparent;
                     border: none;
                   "
                 >
                   <b-img
                     @click="toggleSideBar"
-                    style="margin: 0px; width: 50px"
+                    style="margin: 300px 0px; width: 40px"
                     src="/assets/chevron.png"
                   ></b-img>
                 </b-button>
               </b-col>
+
               <!-- Sidebar -->
               <Transition name="sideBar">
                 <b-col fill-height v-show="renderSidebar">
@@ -70,13 +70,18 @@
                   />
                 </b-col>
               </Transition>
-              <EmergencyStopAll />
+              
             </b-row>
           </b-col>
         </b-row>
       </b-col>
     </b-row>
   </b-container>
+  <b-col style="text-align: right; margin-top: -100px;">
+    <b-row>
+      <EmergencyStopAll />
+    </b-row>
+  </b-col>
 </template>
 
 <script>
@@ -210,7 +215,7 @@ export default {
 }
 
 .right-column {
-  padding: 0;
+  padding: 0px;
   /* background-color: purple; */
 }
 
@@ -228,10 +233,11 @@ export default {
 
 .buttonTranslate {
   transition: all 0.8s;
-  transform: translate(590px) rotate(180deg);
+  transform: translateX(470px);
 }
 
 .buttonRotate {
   transform: rotate(180deg);
+  transform: translateX(470px);
 }
 </style>

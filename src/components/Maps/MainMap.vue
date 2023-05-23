@@ -147,6 +147,6 @@ export default defineComponent({
 	/* sets the width of the map */
 	width: 100vw;
 	/* sets the height of the map */
-	height: 92vh;
+	height: 100vh;
 }
 </style>

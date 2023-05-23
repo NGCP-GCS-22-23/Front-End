@@ -4,7 +4,7 @@
             <svg class="vehicleImg" v-if="path && fillColor" viewBox="0 0 100 100">
                 <path :d="path" :fill="fillColor" />
             </svg>
-            <h2>{{ vehicleName }}: {{ currentStage }}</h2>
+            <h4 style="padding-bottom: -10px;">{{ vehicleName }}: {{ currentStage }}</h4>
         </b-row>
     </b-container>
 </template>
@@ -64,7 +64,8 @@ export default defineComponent({
 
 <style scoped>
 .stage-container {
-    margin-top: 10px;
+    margin-top: -5px;
+    margin-left: -10px;
 }
 
 .vehicleName {

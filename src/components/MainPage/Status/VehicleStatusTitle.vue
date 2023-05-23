@@ -28,7 +28,8 @@ export default {
 
 <style scoped>
 .vehicleName {
-	padding: 10px 0px;												create an area of empty around the vehicle name inside its bounding box of 10px on top and bottom 0px on left and right
+	padding: 10px 0px;	
+	font-size: 10px;											create an area of empty around the vehicle name inside its bounding box of 10px on top and bottom 0px on left and right
 }
 
 .vehicleImg {

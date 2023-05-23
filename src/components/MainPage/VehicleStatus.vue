@@ -31,8 +31,11 @@
             <!-- bottom row -->
             <b-row>
                 <!-- bottom left -->
-                <b-col cols="">
+                <b-col>
                     <StageSelection :vehicleName="vehicleName" :missionData="missionData" :vehicleData="vehicleData" />
+                </b-col>
+                <b-col>
+                    <AddWaypoint :vehicleName="vehicleName" />
                 </b-col>
                 <!-- bottom right -->
                 <b-col>
@@ -51,6 +54,7 @@ import EmergencyStop from "@/components/MainPage/Status/EmergencyStop.vue";
 import Battery from "@/components/MainPage/Status/Battery.vue";
 import Mode from "@/components/MainPage/Status/Mode.vue";
 import StageSelection from "@/components/MainPage/Status/StageSelection.vue";
+import AddWaypoint from "@/components/MainPage/Status/AddWaypoint.vue";
 import { defineComponent } from "vue";
 import type { Icon, MissionData, VehicleData } from "@/types";
 
@@ -72,6 +76,7 @@ export default defineComponent({
         Battery,                    // Component for displaying battery status
         Mode,                       // Component for displaying current mode of vehicle
         StageSelection,             // Component for stage selection button
+        AddWaypoint,
     },
     computed: {
         //If vehicle data is null display battery percentage as -1, otherwise return the battery percentage
