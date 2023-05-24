@@ -3,6 +3,9 @@
 Front-end Ground Control Station for Northrop Grumman Collaboration Project
 
 ## Project setup
+Add your Google API key to main.ts by pasting the key in quotes to line 25, 
+>key: "YOUR_KEY_HERE";
+**Note that the Google Maps API does require internet.
 
 ```
 npm install
