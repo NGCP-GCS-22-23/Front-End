@@ -61,30 +61,45 @@ export default {
           name: this.$refs.Name.missionName,
           MAC: {
             icon: 'https://github.com/NGCP-GCS-21-22/Front-End/blob/main/front-end/src/assets/MAC.png',
-            MissionWaypoint:
-              this.$refs.MACForm.$refs.MissionWaypoint.waypointName,
-            Stage: this.$refs.MACForm.$refs.Stages.id,
-            Stage: this.$refs.MACForm.$refs.Stages.stage,
-            Manualcontrol: this.$refs.MACForm.$refs.ManualControl.toggle,
-            Searcharea: this.$refs.MACForm.$refs.SearchArea.toggle,
+            StartCoords:
+              this.$refs.MACForm.$refs.StartCoords.startLong,
+            StartCoords:
+              this.$refs.MACForm.$refs.StartCoords.startLat,
+            StartCoords:
+              this.$refs.MACForm.$refs.StartCoords.startAlt,
+            //Stage: this.$refs.MACForm.$refs.Stages.id,
+            //Stage: this.$refs.MACForm.$refs.Stages.stage,
+            //Manualcontrol: this.$refs.MACForm.$refs.ManualControl.toggle,
+            Searcharea: this.$refs.MACForm.$refs.SearchArea.long,
+            Searcharea: this.$refs.MACForm.$refs.SearchArea.lat,
           },
           ERU: {
             icon: 'https://github.com/NGCP-GCS-21-22/Front-End/blob/main/front-end/src/assets/ERU.png',
-            MissionWaypoint:
-              this.$refs.ERUForm.$refs.MissionWaypoint.waypointName,
-            Stage: this.$refs.ERUForm.$refs.Stages.id,
-            Stage: this.$refs.ERUForm.$refs.Stages.stage,
-            Manualcontrol: this.$refs.ERUForm.$refs.ManualControl.toggle,
-            Searcharea: this.$refs.ERUForm.$refs.SearchArea.toggle,
+            StartCoords:
+              this.$refs.ERUForm.$refs.StartCoords.startLong,
+            StartCoords:
+              this.$refs.ERUForm.$refs.StartCoords.startLat,
+            StartCoords:
+              this.$refs.ERUForm.$refs.StartCoords.startAlt,
+            //Stage: this.$refs.MACForm.$refs.Stages.id,
+            //Stage: this.$refs.MACForm.$refs.Stages.stage,
+            //Manualcontrol: this.$refs.MACForm.$refs.ManualControl.toggle,
+            Searcharea: this.$refs.ERUForm.$refs.SearchArea.long,
+            Searcharea: this.$refs.ERUForm.$refs.SearchArea.lat,
           },
           MEA: {
             icon: 'https://github.com/NGCP-GCS-21-22/Front-End/blob/main/front-end/src/assets/MEA.png',
-            MissionWaypoint:
-              this.$refs.MEAForm.$refs.MissionWaypoint.waypointName,
-            Stage: this.$refs.MEAForm.$refs.Stages.id,
-            Stage: this.$refs.MEAForm.$refs.Stages.stage,
-            Manualcontrol: this.$refs.MEAForm.$refs.ManualControl.toggle,
-            Searcharea: this.$refs.MEAForm.$refs.SearchArea.toggle,
+            StartCoords:
+              this.$refs.MEAForm.$refs.StartCoords.startLong,
+            StartCoords:
+              this.$refs.MEAForm.$refs.StartCoords.startLat,
+            StartCoords:
+              this.$refs.MEAForm.$refs.StartCoords.startAlt,
+            //Stage: this.$refs.MACForm.$refs.Stages.id,
+            //Stage: this.$refs.MACForm.$refs.Stages.stage,
+            //Manualcontrol: this.$refs.MACForm.$refs.ManualControl.toggle,
+            Searcharea: this.$refs.MEAForm.$refs.SearchArea.long,
+            Searcharea: this.$refs.MEAForm.$refs.SearchArea.lat,
           },
         },
       };

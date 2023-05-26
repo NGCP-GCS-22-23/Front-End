@@ -10,28 +10,34 @@
 				<ImageURL ref="ImageURL" />
 			</b-row>
 			<b-row>
-				<!-- Mission Waypoint -->
-				<MissionWaypoint ref="MissionWaypoint" />
+				<!-- Mission Waypoint 
+				<MissionWaypoint ref="MissionWaypoint" /> -->
+				<!-- Starting Coordinates -->
+				<StartCoords ref="StartCoords" />
 			</b-row>
 			&nbsp;
 			<b-row>
-				<!-- Stages Form -->
-				<Stages ref="Stages" />
+				<!-- Stages Form 
+				<Stages ref="Stages" /> -->
+				<b-row align="start">
+					<!-- Search Area (toggle/checkbox) -->
+					<SearchArea ref="SearchArea" />
+				</b-row>
 			</b-row>
 			&nbsp;
 			<b-row align="start">
-				<!-- Manual Control (toggle/checkbox) -->
-				<ManualControl ref="ManualControl" :vehicleName="vehicleName + 'manual'" />
+				<!-- Manual Control (toggle/checkbox) 
+				<ManualControl ref="ManualControl" :vehicleName="vehicleName + 'manual'" /> -->
 			</b-row>
-			<b-row align="start">
-				<!-- Search Area (toggle/checkbox) -->
-				<SearchArea ref="SearchArea" :vehicleName="vehicleName + 'search'" />
-			</b-row>
+			
 		</b-card>
+		
 	</b-container>
+	
 </template>
 
 <script lang="ts">
+import StartCoords from "@/components/Form/StartCoords.vue"
 import MissionWaypoint from "@/components/Form/MissionWaypoint.vue";
 import Stages from "@/components/Form/Stages.vue";
 import ManualControl from "@/components/Form/ManualControl.vue";
@@ -43,6 +49,7 @@ export default {
 		vehicleName: String,
 	},
 	components: {
+		StartCoords,
 		MissionWaypoint,
 		Stages,
 		ManualControl,
