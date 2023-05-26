@@ -31,7 +31,7 @@
 		  {
 			startLong: "",
             startLat: "",
-            startAlt: "",
+            startAlt: "", 
 		  },
 		],
 	  };

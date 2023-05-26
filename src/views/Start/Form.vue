@@ -99,7 +99,7 @@ export default {
             //Stage: this.$refs.MACForm.$refs.Stages.stage,
             //Manualcontrol: this.$refs.MACForm.$refs.ManualControl.toggle,
             Searcharea: this.$refs.MEAForm.$refs.SearchArea.long,
-            Searcharea: this.$refs.MEAForm.$refs.SearchArea.lat,
+            Searcharea: this.$refs.MEAForm.$refs.SearchArea.lat, 
           },
         },
       };

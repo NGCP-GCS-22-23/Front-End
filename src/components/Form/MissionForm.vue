@@ -6,7 +6,7 @@
 			</b-row>
 
 			<b-row>
-				<!-- Mission Waypoint -->
+				<!-- Mission Waypoint --> 
 				<ImageURL ref="ImageURL" />
 			</b-row>
 			<b-row>

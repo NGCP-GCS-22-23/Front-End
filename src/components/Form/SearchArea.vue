@@ -2,7 +2,7 @@
 	<div>
 	  <b-col>
 		<b-row>
-		  <h4 class="text-left font-weight-bold">Search Area</h4>
+		  <h4 class="text-left font-weight-bold">Search Area</h4> 
 		</b-row>
 		<b-row>
 		  <div class="b-form-group" v-for="(input, k) in inputs" :key="k">
