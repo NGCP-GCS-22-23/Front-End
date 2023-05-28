@@ -10,15 +10,16 @@
 </template>
 
 <script lang="ts">
-import type { Icon, MissionData, Stage, VehicleData } from '@/types';
+import type { Icon, MissionData, Stage, VehicleDataGeneral } from '@/types';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
     props: {
-        vehicleData: Object as () => VehicleData,
+        vehicleData: Object as () => VehicleDataGeneral,
         vehicleName: String as () => keyof MissionData,
         missionData: Object as () => MissionData,
         vehicleIcon: Object as () => Icon,
+        vehicleStages: Object as () => Stage[],
         large: Boolean,
     },
     computed: {
@@ -32,8 +33,7 @@ export default defineComponent({
             if (!this.missionData) return undefined;
             if (!this.vehicleName) return undefined;
             // return stages array
-            let vehicleStages: Stage[] = this.missionData[this.vehicleName].stages;
-            return vehicleStages
+            return this.vehicleStages;
             // let stages = [];
             // for (let i = 0; i < vehicleStages.length; i++) {
             //     let stage = {
@@ -46,12 +46,12 @@ export default defineComponent({
         },
         currentStage(): string {
             if (this.vehicleData == null) return "No Stage Selected";
-            let currentStage = this.vehicleData.current_stage;
-            if (this.stages != null) {
-                for (let i = 0; i < this.stages.length; i++) {
-                    let stage = this.stages[i];
+            let currentStage = this.vehicleData.currentStageId;
+            if (this.vehicleStages != null) {
+                for (let i = 0; i < this.vehicleStages.length; i++) {
+                    let stage = this.vehicleStages[i];
                     if (stage.id == currentStage) {
-                        return stage.stage;
+                        return stage.name;
                     }
                 }
             }

@@ -22,7 +22,7 @@ app.use(BootstrapVue3);
 console.log(import.meta.env, import.meta.env.API_KEY);
 app.use(VueGoogleMaps, {
   load: {
-    key: import.meta.env.VITE_API_KEY,
+    key: import.meta.env.API_KEY,
   },
 });
 app.use(router);

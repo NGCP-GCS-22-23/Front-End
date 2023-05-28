@@ -3,9 +3,10 @@
         <b-row class="vehicle-row">
             <!-- left column -->
             <b-col class="left-column" cols="6  ">
-                <Map v-if="vehicleData && vehicleIcon" :vehicleName="vehicleName" :vehicleData="vehicleData"
+                <!-- <Map v-if="vehicleData && vehicleIcon" :vehicleName="vehicleName" :vehicleData="vehicleData"
                     :vehicleIcon="vehicleIcon" :widgetData="widgetData" :widgetTypeSelected="widgetTypeSelected"
-                    @moveMarker="setWidgetData" />
+                    @moveMarker="setWidgetData" /> -->
+                <Map />
             </b-col>
             <!-- right column -->
             <b-col cols="6">
@@ -14,8 +15,13 @@
                     <!-- left of right column -->
                     <b-col cols="8">
                         <b-row v-if="widgetTypeSelected != 'Geofence'">
-                            <VehicleStatus :vehicleName="vehicleName" :vehicleIcon="vehicleIcon"
-                                :vehicleData="vehicleData" :missionData="missionData" />
+                          <VehicleStatus 
+                              :vehicleName="vehicleName" 
+                              :vehicleIcon="vehicleIcon"
+                              :vehicleData="vehicleData" 
+                              :missionData="missionData"
+                              :vehicleStages="missionStage"
+                            />
                         </b-row>
                         <b-row>
                             <Widgets v-if="vehicleName && vehicleMissionData" :vehicleName="vehicleName"
@@ -51,11 +57,12 @@
 // bring in functions from other files to be used with the MAC to display all necessary info for the vehicle
 import VehicleStatus from "@/components/MainPage/VehicleStatus.vue";
 import Widgets from "@/components/VehiclePage/Widgets.vue";
-import Map from "@/components/Maps/VehicleMap.vue";
+import Map from "@/components/Maps/MainMap.vue";
 import {
     getMissionData,
     getVehicleData,
     getWidgetData,
+    getMissionStages
 } from "@/helpers/getData";
 import FlightIndicators from "@/components/VehiclePage/FlightIndicators.vue";
 import Status from "@/components/VehiclePage/StatusComponents/Status.vue";
@@ -79,6 +86,7 @@ export default {
             vehicleName: "MAC",
             vehicleData: null,
             missionData: null,
+            missionStage: null,
             widgetData: null,
             widgetTypeSelected: null,
         };
@@ -104,9 +112,13 @@ export default {
         // calls to methods to initialize MAC info and update data at 1Hz (once every 1s or every 1000ms)
         this.initializeMissionData();
         this.initializeWidgetData();
-        this.interval = setInterval(this.updateVehicleData, 1000);
+        this.interval = setInterval(this.updateStatus, 1000);
     },
     methods: {
+        updateStatus() {
+          this.updateMissionMAC(),
+          this.updateVehicleData()
+        },
         async initializeMissionData() {
             // asynchronous method attempts to initialize mission data while program continues to be responsive to other tasks
             try {
@@ -133,6 +145,14 @@ export default {
             } catch (error) {
                 console.log(error);
             }
+        },
+        async updateMissionMAC() {
+          try {
+            const response = await getMissionStages("MAC");
+            this.missionStage = response;
+          } catch (error) {
+            console.log(error);
+          }
         },
 
         // initialize widget data

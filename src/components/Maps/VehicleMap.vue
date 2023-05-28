@@ -28,7 +28,6 @@ import {
 import VehiclePositionMarker from "@/components/Maps/MapComponents/VehiclePositionMarker.vue";
 import MissionWaypointMarker from "@/components/Maps/MapComponents/MissionWaypointMarker.vue";
 import HomeCoordinatesMarker from "@/components/Maps/MapComponents/HomeCoordinatesMarker.vue";
-import HikerMarker from "@/components/Maps/MapComponents/HikerMarker.vue";
 import SearchAreaComponents from "@/components/Maps/MapComponents/SearchAreaComponents.vue";
 import GeofenceComponents from "@/components/Maps/MapComponents/GeofenceComponents.vue";
 import { defineComponent } from "vue";
@@ -46,7 +45,6 @@ export default defineComponent({
         VehiclePositionMarker,
         MissionWaypointMarker,
         HomeCoordinatesMarker,
-        HikerMarker,
         SearchAreaComponents,
         GeofenceComponents,
     },

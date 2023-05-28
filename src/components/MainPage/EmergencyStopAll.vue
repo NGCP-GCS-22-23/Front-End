@@ -38,64 +38,16 @@ export default {
     methods: {
         sendEmergencyStopCommand() {
             this.eModalShow = !this.eModalShow;
-            const path = "http://localhost:5000/send";
+            const path = "http://localhost:5000/api/manualOverride";
 
-            // MAC
-            let payload = {
-                id: "Stage Selection",
-                data: {
-                    current_stage: -1,
-                    stage_name: "Emergency Stop",
-                    vehicle_name: "MAC",
-                    estop: true,
-                },
-            };
             axios
-                .post(path, payload)
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-
-            // ERU
-            payload = {
-                id: "Stage Selection",
-                data: {
-                    current_stage: -1,
-                    stage_name: "Emergency Stop",
-                    vehicle_name: "ERU",
-                    estop: true,
-                },
-            };
-            axios
-                .post(path, payload)
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-
-            // MEA
-            payload = {
-                id: "Stage Selection",
-                data: {
-                    current_stage: -1,
-                    stage_name: "Emergency Stop",
-                    vehicle_name: "MEA",
-                    estop: true,
-                },
-            };
-            axios
-                .post(path, payload)
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+              .post(path)
+              .then((response) => {
+                console.log(response);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
         },
     },
 };
@@ -107,7 +59,4 @@ export default {
     padding-top: 10px;
 }
 
-.emergency-button {
-
-}
 </style>

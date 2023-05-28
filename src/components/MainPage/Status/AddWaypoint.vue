@@ -61,7 +61,4 @@ export default {
 </script>
 
 <style scoped>
-.waypoint {
-    height: 41px;
-}
 </style>
