@@ -4,8 +4,8 @@ import Form from "@/views/Start/Form.vue";
 import NavbarVue from "@/components/Navbar.vue";
 import MainVue from "@/views/GCS/Main.vue";
 import MACVue from "@/views/GCS/MAC.vue";
-import ERU from "@/views/GCS/ERU.vue";
 import MEAVue from "@/views/GCS/MEA.vue";
+import ERUVue from "@/views/GCS/ERU.vue";
 
 const routes: RouterOptions["routes"] = [
   {
@@ -36,7 +36,7 @@ const routes: RouterOptions["routes"] = [
       {
         path: "eru",
         name: "ERU",
-        component: ERU,
+        component: ERUVue,
       },
       {
         path: "mea",

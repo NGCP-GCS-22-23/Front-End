@@ -13,11 +13,11 @@
 	</GmapMarker>
 </template>
 
-<script lang="ts">import type { Icon, VehiclePositionMarker, VehicleData } from '@/types';
+<script lang="ts">import type { Icon, VehiclePositionMarker, VehicleData, VehicleDataAir, VehicleDataGround } from '@/types';
 
 export default {
 	props: {
-		vehicleData: { required: true, type: Object as () => VehicleData },
+		vehicleData: { required: true, type: Object as () => VehicleDataAir | VehicleDataGround },
 		vehicleIcon: { required: true, type: Object as () => Icon },
 	},
 	computed: {
@@ -26,8 +26,8 @@ export default {
 			return {
 				id: "vehicleMarker",
 				position: {
-					lat: this.vehicleData.latitude,
-					lng: this.vehicleData.longitude,
+					lat: this.vehicleData.latestCoordinates.lat,
+					lng: this.vehicleData.latestCoordinates.lng,
 				},
 				icon: {
 					path: this.vehicleIcon.path,

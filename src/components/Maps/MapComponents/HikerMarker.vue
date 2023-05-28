@@ -19,43 +19,43 @@
 </template>
 
 <script lang="ts">
-import { getHikerPosition } from "@/helpers/getData";
-import type { HikerPosition } from "@/types";
-import { defineComponent } from "vue";
+// import { getHikerPosition } from "@/helpers/getData";
+// import type { HikerPosition } from "@/types";
+// import { defineComponent } from "vue";
 
-export default defineComponent({
-	data() {
-		return {
-			hikerPosition: { lat: "", lng: "" } as HikerPosition,
-			hover: false as Boolean,
-		};
-	},
-	computed: {
-		hikerCoordinates() {
-			if (!this.hikerPosition) return null;
-			return {
-				id: "hiker",
-				position: {
-					lat: parseFloat(this.hikerPosition.lat),
-					lng: parseFloat(this.hikerPosition.lng),
-				}, // uses parseFloat to ensure the values are converted to a number
-			};
-		},
-	},
-	mounted() {
-		this.interval = setInterval(this.updateHikerLocation, 1000);
-	}, // calls updateHikerLocation every 1000 milliseconds (1 second)
-	methods: {
-		async updateHikerLocation() {
-			try {
-				const response = await getHikerPosition();
-				this.hikerPosition = response as HikerPosition;
-			} catch (error) {
-				console.log(error);
-			}
-		}, // updates the position with latitude and longitude from getData.ts
-	},
-});
+// export default defineComponent({
+// 	data() {
+// 		return {
+// 			hikerPosition: { lat: "", lng: "" } as HikerPosition,
+// 			hover: false as Boolean,
+// 		};
+// 	},
+// 	computed: {
+// 		hikerCoordinates() {
+// 			if (!this.hikerPosition) return null;
+// 			return {
+// 				id: "hiker",
+// 				position: {
+// 					lat: parseFloat(this.hikerPosition.lat),
+// 					lng: parseFloat(this.hikerPosition.lng),
+// 				}, // uses parseFloat to ensure the values are converted to a number
+// 			};
+// 		},
+// 	},
+// 	mounted() {
+// 		this.interval = setInterval(this.updateHikerLocation, 1000);
+// 	}, // calls updateHikerLocation every 1000 milliseconds (1 second)
+// 	methods: {
+// 		async updateHikerLocation() {
+// 			try {
+// 				const response = await getHikerPosition();
+// 				this.hikerPosition = response as HikerPosition;
+// 			} catch (error) {
+// 				console.log(error);
+// 			}
+// 		}, // updates the position with latitude and longitude from getData.ts
+// 	},
+// });
 </script>
 
 <style scoped>

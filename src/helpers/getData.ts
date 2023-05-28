@@ -1,9 +1,9 @@
-import type { MissionData, VehicleData, VehicleMission, WidgetData } from "@/types.js";
+import type { MissionData, Stage, VehicleData, VehicleDataAir, VehicleDataGround, VehicleMission, WidgetData } from "@/types.js";
 import axios from "axios";
 import { defaultPolygon } from "./coordinates.js";
 
-// url to root of api
-export const API = "http://localhost:5000/";
+// url to root of baseUrl
+export const baseUrl = "http://localhost:5000/api/";
 
 const getMissionData = (vehicleName: string): Promise<MissionData | VehicleMission> => {
   let addVehicleIcons = (missionData: MissionData) => {
@@ -31,7 +31,7 @@ const getMissionData = (vehicleName: string): Promise<MissionData | VehicleMissi
   // sends new command to backend
   return new Promise((resolve, reject) => {
     axios
-      .post(API + "send", payload)
+      .post(baseUrl + "send", payload)
       .then((response) => {
         let missionData = response.data;
         missionData = addVehicleIcons(missionData);
@@ -45,45 +45,51 @@ const getMissionData = (vehicleName: string): Promise<MissionData | VehicleMissi
   });
 };
 
-// obtains the stages of all vehicles
-const getGeneralStage = (): Promise<string> => {
-  let path = API + "send";
-  let payload = {
-    id: "GET General Stage",
-  };
+const getMissionStages = (vehicleName: string): Promise<Stage[]> => {
   return new Promise((resolve, reject) => {
     axios
-      .post(path, payload)
+      .get(baseUrl + `missionStages/${vehicleName}`)
       .then((response) => {
-        resolve(`${response.data["vehicle"]}: ${response.data["name"]}`);
+        resolve(response.data);
       })
       .catch((error) => {
+        console.log(error);
+        reject(error);
+      })
+  });
+}
+
+// obtains the stages of all vehicles
+const getGeneralStage = () : Promise<string> => {
+  let path = baseUrl + "missionWaypoint/MAC";
+  return new Promise((resolve, reject) => {
+    axios
+      .get(path)
+      .then((response) => {
+        resolve(`${response.data[""]}: ${response.data["name"]}`);
+      })
+      .catch((error) => {
+        console.log(error);
         reject(error);
       });
   });
 };
 
 // gets data pertaining to an individual vehicle
-const getVehicleData = (vehicleName: string): Promise<VehicleData> => {
-  let path = API + "send";
-  let payload = {
-    id: "GET Vehicle Data",
-    data: {
-      vehicle_name: vehicleName,
-    },
-  };
-
+const getVehicleData = (vehicleName: string): Promise<VehicleDataGround | VehicleDataAir> => {
   return new Promise((resolve, reject) => {
     axios
-      .post(path, payload)
+      .get(baseUrl + `vehicleData/${vehicleName}`)
       .then((response) => {
         resolve(response.data);
       })
       .catch((error) => {
+        console.log(error);
         reject(error);
       });
   });
 };
+
 
 // gets vehicle regarding the widget of a given vehicle
 const getWidgetData = async (vehicleName: string): Promise<WidgetData> => {
@@ -93,7 +99,7 @@ const getWidgetData = async (vehicleName: string): Promise<WidgetData> => {
   let path: string;
 
   // Mission Waypoint
-  path = API + vehicleName;
+  path = baseUrl + vehicleName;
   axios
     .get(path)
     .then((response) => {
@@ -126,7 +132,7 @@ const getWidgetData = async (vehicleName: string): Promise<WidgetData> => {
   }
 
   // Search Area
-  path = "http://localhost:5000/getSearchArea";
+  path = baseUrl + "geofenceSpecial/searchArea";
   axios
     .get(path)
     .then((response) => {
@@ -141,7 +147,7 @@ const getWidgetData = async (vehicleName: string): Promise<WidgetData> => {
   }
 
   // Geofence
-  path = `http://localhost:5000/getGeofence/${vehicleName}`;
+  path = baseUrl + "geofence";
   axios
     .get(path)
     .then((response) => {
@@ -164,83 +170,83 @@ const getWidgetData = async (vehicleName: string): Promise<WidgetData> => {
 };
 
 // gets position of hiker by querying each vehicle for position
-const getHikerPosition = () => {
-  let path = "http://localhost:5000/send";
+// const getHikerPosition = () => {
+//   let path = "http://localhost:5000/send";
 
-  return new Promise(async (resolve, reject) => {
-    // MEA
-    let payload = null;
+//   return new Promise(async (resolve, reject) => {
+//     // MEA
+//     let payload = null;
 
-    payload = {
-      id: "GET Vehicle Data",
-      data: {
-        vehicle_name: "MEA",
-      },
-    };
-    await axios
-      .post(path, payload)
-      .then((response) => {
-        let hikerPosition = {
-          lat: response.data["hiker_position_lat"],
-          lng: response.data["hiker_position_lng"],
-        };
+//     payload = {
+//       id: "GET Vehicle Data",
+//       data: {
+//         vehicle_name: "MEA",
+//       },
+//     };
+//     await axios
+//       .post(path, payload)
+//       .then((response) => {
+//         let hikerPosition = {
+//           lat: response.data["hiker_position_lat"],
+//           lng: response.data["hiker_position_lng"],
+//         };
 
-        if (hikerPosition != null) {
-          resolve(hikerPosition);
-        }
-      })
-      .catch((error) => {
-        reject(error);
-      });
+//         if (hikerPosition != null) {
+//           resolve(hikerPosition);
+//         }
+//       })
+//       .catch((error) => {
+//         reject(error);
+//       });
 
-    // ERU
-    payload = {
-      id: "GET Vehicle Data",
-      data: {
-        vehicle_name: "ERU",
-      },
-    };
-    await axios
-      .post(path, payload)
-      .then((response) => {
-        let hikerPosition = {
-          lat: response.data["hiker_position_lat"],
-          lng: response.data["hiker_position_lat"],
-        };
+//     // ERU
+//     payload = {
+//       id: "GET Vehicle Data",
+//       data: {
+//         vehicle_name: "ERU",
+//       },
+//     };
+//     await axios
+//       .post(path, payload)
+//       .then((response) => {
+//         let hikerPosition = {
+//           lat: response.data["hiker_position_lat"],
+//           lng: response.data["hiker_position_lat"],
+//         };
 
-        if (hikerPosition != null) {
-          resolve(hikerPosition);
-        }
-      })
-      .catch((error) => {
-        reject(error);
-      });
+//         if (hikerPosition != null) {
+//           resolve(hikerPosition);
+//         }
+//       })
+//       .catch((error) => {
+//         reject(error);
+//       });
 
-    // MAC
-    payload = {
-      id: "GET Vehicle Data",
-      data: {
-        vehicle_name: "MAC",
-      },
-    };
-    await axios
-      .post(path, payload)
-      .then((response) => {
-        let hikerPosition = {
-          lat: response.data["hiker_position_lat"],
-          lng: response.data["hiker_position_lat"],
-        };
+//     // MAC
+//     payload = {
+//       id: "GET Vehicle Data",
+//       data: {
+//         vehicle_name: "MAC",
+//       },
+//     };
+//     await axios
+//       .post(path, payload)
+//       .then((response) => {
+//         let hikerPosition = {
+//           lat: response.data["hiker_position_lat"],
+//           lng: response.data["hiker_position_lat"],
+//         };
 
-        if (hikerPosition != null) {
-          resolve(hikerPosition);
-        }
-      })
-      .catch((error) => {
-        reject(error);
-      });
+//         if (hikerPosition != null) {
+//           resolve(hikerPosition);
+//         }
+//       })
+//       .catch((error) => {
+//         reject(error);
+//       });
 
-    resolve("error getting vehicle information");
-  });
-};
+//     resolve("error getting vehicle information");
+//   });
+// };
 
-export { getMissionData, getGeneralStage, getVehicleData, getWidgetData, getHikerPosition };
+export { getMissionData, getGeneralStage, getVehicleData, getWidgetData, getMissionStages };

@@ -17,13 +17,65 @@ export type VehicleData = {
   geofence_compliant: string;
 };
 
+type Waypoint = {
+  timeCreated: string;
+  coordinates: {
+    lat: number,
+    lng: number
+  }
+}
+
+export type VehicleDataGround = {
+  vehicle: string;
+  currentStageId: number;
+  manualMode: boolean;
+  homeCoordinates: {
+    lat: number,
+    lng: number
+  };
+  missionWaypoints: Waypoint[];
+  lastUpdateTime: string;
+  speed: number;
+  yaw: number;
+  batteryLife1: number;
+  batteryLife2: number;
+  sensorOk: boolean;
+  latestCoordinates: {
+    lat: number;
+    lng: number
+  }
+};
+
+export type VehicleDataAir = {
+  vehicle: string;
+  currentStageId: number;
+  manualMode: boolean;
+  homeCoordinates: {
+    lat: number,
+    lng: number
+  };
+  missionWaypoints: Waypoint[];
+  lastUpdateTime: string;
+  altitude: number;
+  speed: number;
+  pitch: number;
+  roll: number;
+  yaw: number;
+  batteryLife: number;
+  sensorOk: boolean;
+  latestCoordinates: {
+    lat: number;
+    lng: number
+  }
+};
+
 export type Icon = {
   path: string;
   fillColor: string;
 };
 export type Stage = {
-  id: string;
-  stage: string;
+  id: number;
+  name: string;
 };
 export type VehicleMission = {
   icon: Icon;

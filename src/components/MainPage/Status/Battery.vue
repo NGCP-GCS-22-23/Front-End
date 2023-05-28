@@ -1,10 +1,10 @@
 <template>
-    <div class="batteryContainer">
-        <b-icon class="battery" :style="batteryStyle" :icon="batteryIcon">
-        </b-icon>
-        <div v-if="batteryPct == -1" class="batteryPercent">--%</div>
-        <div v-else class="batteryPercent">{{ batteryPct }}%</div>
-    </div>
+  <b-card class="battery text-white" style="font-weight: 600;" :class="batteryPct > 66 ? 'bg-success' : 
+    (batteryPct > 33 ? 'bg-warning' : 'bg-danger')" no-body>
+    <span>
+      {{ batteryPct }}%
+    </span>
+  </b-card>
 </template>
 
 <script lang="ts">
@@ -34,26 +34,14 @@ export default {
 </script>
 
 <style scoped>
-.batteryContainer {
-    overflow: auto;
-    /** if content is rendered outside battery icon element content is clipped and scroll bars are added if necessary by auto*/
-    padding: 10px 0px;
-}
 
 /** creates 10px of blank space on top and bottom inside battery icon and 0px space on left/right*/
 .battery {
-    width: 60px;
-    /** width of battery icon*/
-    height: 38px;
-    /** height of icon*/
-    margin-top: -8px;
-    /** creates blank space of 8px around border of battery element */
-    float: left;
-    /** set the horizontal alignment of the battery icon*/
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .batteryPercent {
-    float: left;
     /** set the horizontal alignment of the bat % #*/
     font-size: 11pt;
     /**font size of battery % # */

@@ -20,22 +20,20 @@ import {
 	defaultLng,
 } from "@/helpers/coordinates.js";
 import VehiclePositionMarker from "@/components/Maps/MapComponents/VehiclePositionMarker.vue";
-import HikerMarker from "@/components/Maps/MapComponents/HikerMarker.vue";
 import { defineComponent } from "vue";
-import type { Icon, VehicleData } from "@/types";
+import type { Icon, VehicleData, VehicleDataAir, VehicleDataGround } from "@/types";
 
 export default defineComponent({
 	props: {
-		macData: { required: true, type: Object as () => VehicleData },
-		eruData: { required: true, type: Object as () => VehicleData },
-		meaData: { required: true, type: Object as () => VehicleData },
+		macData: { required: true, type: Object as () => VehicleDataAir },
+		eruData: { required: true, type: Object as () => VehicleDataGround },
+		meaData: { required: true, type: Object as () => VehicleDataAir },
 		macIcon: { required: true, type: Object as () => Icon },
 		eruIcon: { required: true, type: Object as () => Icon },
 		meaIcon: { required: true, type: Object as () => Icon },
 	},
 	components: {
-		VehiclePositionMarker,
-		HikerMarker,
+		VehiclePositionMarker
 	},
 	// Map data
 	data() {
@@ -74,15 +72,15 @@ export default defineComponent({
 			return {
 				id: "macMarker",
 				position: {
-					lat: this.macData.latitude,
-					lng: this.macData.longitude,
+					lat: this.macData.latestCoordinates.lat,
+					lng: this.macData.latestCoordinates.lng,
 				},
 				icon: {
 					path: this.macIcon.path,
 					fillColor: this.macIcon.fillColor,
 					fillOpacity: 1,
 					strokeWeight: 0,
-					rotation: this.macData.rotation,
+					rotation: this.macData.yaw,
 					scale: 1,
 					anchor: { x: 41.42, y: 46.713 },
 				},
@@ -96,15 +94,15 @@ export default defineComponent({
 			return {
 				id: "eruMarker",
 				position: {
-					lat: this.eruData.latitude,
-					lng: this.eruData.longitude,
+					lat: this.eruData.latestCoordinates.lat,
+					lng: this.eruData.latestCoordinates.lng,
 				},
 				icon: {
 					path: this.eruIcon.path,
 					fillColor: this.eruIcon.fillColor,
 					fillOpacity: 1,
 					strokeWeight: 0,
-					rotation: this.eruData.rotation,
+					rotation: this.eruData.yaw,
 					scale: 1,
 					anchor: { x: 41.42, y: 46.713 },
 				},
@@ -118,15 +116,15 @@ export default defineComponent({
 			return {
 				id: "meaMarker",
 				position: {
-					lat: this.meaData.latitude,
-					lng: this.meaData.longitude,
+					lat: this.meaData.latestCoordinates.lat,
+					lng: this.meaData.latestCoordinates.lng,
 				},
 				icon: {
 					path: this.meaIcon.path,
 					fillColor: this.meaIcon.fillColor,
 					fillOpacity: 1,
 					strokeWeight: 0,
-					rotation: this.meaData.rotation,
+					rotation: this.meaData.yaw,
 					scale: 1,
 					anchor: { x: 41.42, y: 46.713 },
 				},

@@ -3,8 +3,8 @@
     <div>
         <!-- button to open modal -->
         <b-button class="stage-selection-button" style="padding: 5px 10px;" @click="sModalShow = !sModalShow"
-            variant="primary">{{ "STAGE" }}
-            <b-img style="width: 24px; color: #ffffff" src="/assets/select.png"></b-img>
+            variant="primary">SELECT STAGE
+            <b-img class="mb-1" style="width: 20px; color: #ffffff" src="/assets/select.png"></b-img>
         </b-button>
 
         <!-- dynamic title -->
@@ -12,18 +12,18 @@
             <!-- include form dropdown & submit button -->
 
             <!-- select a stage -->
-            <b-form-select v-model="selected"
-                :options="stages ? stages.map(stage => { return { text: stage.stage, value: stage } }) : []">
-                <b-form-select-option :value="undefined" disabled>-- Please select an option
-                </b-form-select-option>
+            <b-form-select v-model="selected">
+                <b-form-select-option :value="null" disabled>-- Please select an option --</b-form-select-option>
+                <b-form-select-option v-for="stage in vehicleStages" :value="stage.id">{{ stage.name }}</b-form-select-option>
+                
             </b-form-select>
 
             <!-- display selected values -->
             <div class="mt-3">
-                Selected ID: <strong>{{ selectedId }}</strong>
+                Selected ID: <strong>{{ selected }}</strong>
             </div>
             <div class="mt-3">
-                Selected Stage: <strong>{{ selectedStage }}</strong>
+                Selected Stage: <strong>{{ selected }}</strong>
             </div>
 
             <!-- button to submit form (calls endpoint) -->
@@ -34,13 +34,9 @@
 </template>
 
 <script lang="ts">
+import type { Stage } from "@/types";
 import axios from "axios";
 import { defineComponent } from "vue";
-
-type Stage = {
-    id: number,
-    stage: string,
-}
 
 export default defineComponent({
     props: {
@@ -53,6 +49,7 @@ export default defineComponent({
         missionData: Object,
         // data regarding specific vehicle
         vehicleData: Object,
+        vehicleStages: Object
     },
     computed: {
         // existential checks, if prop is null, return null
@@ -60,31 +57,20 @@ export default defineComponent({
             if (this.vehicleData == null) return null;
             return this.vehicleData.current_stage;
         },
-        selectedStage(): string | null {
-            if (this.selected) {
-                return this.selected.stage;
-            }
-            return null;
-        },
-        selectedId(): number | null {
-            if (this.selected) {
-                return this.selected.id;
-            }
-            return null;
-        },
         /**
          * Returns null if either mission data or vehicleName is missing. Else, returns a list of stages.
          */
-        stages(): Stage[] | null {
-            if (!this.missionData) return null;
-            if (!this.vehicleName) return null;
+        stages(): Stage[] | undefined {
+            if (!this.vehicleStages) return undefined;
+            if (!this.vehicleName) return undefined;
             // return stages array
-            let vehicleStages = this.missionData[this.vehicleName].stages;
-            let stages = [];
+            let vehicleStages = this.vehicleStages;
+            let stages: Stage[] = [];
+            stages.push({id: 0, name: '--- Please select an option'})
             for (let i = 0; i < vehicleStages.length; i++) {
-                let stage = {
+                let stage: Stage = {
                     id: vehicleStages[i].id,
-                    stage: vehicleStages[i].stage,
+                    name: vehicleStages[i].name,
                 };
                 stages.push(stage);
             }
@@ -92,13 +78,10 @@ export default defineComponent({
         },
     },
     data() {
-        return {
-            sModalShow: false as Boolean,
-            selected: undefined as Stage | undefined,
-            form: {
-                option: null,
-            },
-        };
+      return {
+        sModalShow: false as Boolean,
+        selected: null,
+      };
     },
     mounted() {
     },
@@ -108,31 +91,25 @@ export default defineComponent({
          */
         submit() {
             this.sModalShow = !this.sModalShow;
-            const path = "http://localhost:5000/send";
+            const path = `http://localhost:5000/api/currentStage/${this.vehicleName}`;
             let payload = {
-                id: "Stage Selection",
-                data: {
-                    current_stage: this.selectedId,
-                    stage_name: this.selectedStage,
-                    vehicle_name: this.vehicleName,
-                    estop: false,
-                },
+              currentStageId: this.selected
             };
             axios
-                .post(path, payload)
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+              .post(path, payload)
+              .then((response) => {
+                console.log(response);
+              })
+              .catch((error) => {
+                console.log(error);
+              })
+              .finally(() => {
+                console.log(payload)
+              });
         },
     },
 });
 </script>
 
 <style scoped>
-.stage-selection-button {
-    height: 41px;
-}
 </style>

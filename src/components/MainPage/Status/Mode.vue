@@ -1,5 +1,6 @@
 <template>
-	<b-card bg-variant="secondary" text-variant="white" class="mode" no-body>
+	<b-card class="mode bg-light" style="font-weight: 600;" 
+    :class="mode == 'Manual' ? 'border-danger text-danger' : 'border-success text-success'" no-body>
 		<span>
 			{{ mode }}
 			<b-icon :icon="mode == 'Autonomous' ? 'cpu-fill' : 'controller'"></b-icon>

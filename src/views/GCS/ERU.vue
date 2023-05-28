@@ -2,10 +2,13 @@
     <b-container class="vehicle-container">
         <b-row class="vehicle-row">
             <!-- left column -->
-            <b-col class="left-column" cols="6">
-                <Map v-if="vehicleData && vehicleIcon && widgetData" :vehicleName="vehicleName"
-                    :vehicleData="vehicleData" :vehicleIcon="vehicleIcon" :widgetData="widgetData"
-                    :widgetTypeSelected="widgetTypeSelected" @moveMarker="setWidgetData" />
+            <b-col class="left-column" cols="6" style="padding: 0">
+                <!-- <Map 
+                  v-if="vehicleData && vehicleIcon && widgetData" :vehicleName="vehicleName"
+                  :vehicleData="vehicleData" :vehicleIcon="vehicleIcon" :widgetData="widgetData"
+                  :widgetTypeSelected="widgetTypeSelected" @moveMarker="setWidgetData" 
+                /> -->
+                <Map />
             </b-col>
             <!-- right column -->
             <b-col cols="6">
@@ -14,8 +17,13 @@
                     <!-- left of right column -->
                     <b-col cols="8">
                         <b-row v-if="widgetTypeSelected != 'Geofence'">
-                            <VehicleStatus :vehicleName="vehicleName" :vehicleIcon="vehicleIcon"
-                                :vehicleData="vehicleData" :missionData="missionData" />
+                            <VehicleStatus 
+                              :vehicleName="vehicleName" 
+                              :vehicleIcon="vehicleIcon"
+                              :vehicleData="vehicleData" 
+                              :missionData="missionData"
+                              :vehicleStages="missionStage"
+                            />
                         </b-row>
                         <b-row>
                             <Widgets v-if="vehicleName && vehicleMissionData" :vehicleName="vehicleName"
@@ -34,13 +42,10 @@
                             </b-row>
                         </b-card>
                         <b-card v-if="widgetTypeSelected != 'Geofence'" class="heading-card">
-                            <Heading :heading="yaw" />
+                          <Heading :heading="yaw" />
+                          <FlightIndicators v-if="widgetTypeSelected != 'Geofence'" :vehicleData="vehicleData" />
                         </b-card>
                     </b-col>
-                </b-row>
-                <!-- bottom row of right -->
-                <b-row>
-                    <FlightIndicators v-if="widgetTypeSelected != 'Geofence'" :vehicleData="vehicleData" />
                 </b-row>
             </b-col>
         </b-row>
@@ -55,11 +60,11 @@ import Heading from '@/components/VehiclePage/FlightIndicators/Heading.vue';
 import ErrorMessages from '@/components/VehiclePage/StatusComponents/ErrorMessages.vue';
 import Status from '@/components/VehiclePage/StatusComponents/Status.vue';
 import Widgets from '@/components/VehiclePage/Widgets.vue';
-import { getMissionData, getWidgetData, getVehicleData } from '@/helpers/getData';
-import type { VehicleData, MissionData, WidgetData, Icon, VehicleMission } from '@/types';
+import { getMissionData, getWidgetData, getVehicleData, getMissionStages } from '@/helpers/getData';
+import type { VehicleData, MissionData, WidgetData, Icon, VehicleMission, VehicleDataGround, Stage, VehicleDataAir } from '@/types';
 import { BContainer, BRow, BCol, BCard } from 'bootstrap-vue-3';
 import { defineComponent } from 'vue';
-import Map from "@/components/Maps/VehicleMap.vue";
+import Map from "@/components/Maps/MainMap.vue";
 
 // Giving class definitions for each component 
 export default defineComponent({
@@ -75,12 +80,13 @@ export default defineComponent({
     data() {
         //different return values for each widget
         return {
-            vehicleName: "ERU" as const,
-            vehicleData: undefined as VehicleData | undefined,
-            missionData: undefined as MissionData | undefined,
-            widgetData: undefined as WidgetData | undefined,
-            widgetTypeSelected: undefined as string | undefined,
-            interval: undefined as NodeJS.Timer | undefined
+          missionStage: undefined as Stage[] | undefined,
+          vehicleName: "ERU" as const,
+          vehicleData: undefined as VehicleDataGround | VehicleDataAir | undefined,
+          missionData: undefined as MissionData | undefined,
+          widgetData: undefined as WidgetData | undefined,
+          widgetTypeSelected: undefined as string | undefined,
+          interval: undefined as NodeJS.Timer | undefined
         };
     },
     //Return values for Icon, Mision data,  vertical axis rotation
@@ -95,9 +101,8 @@ export default defineComponent({
             if (!this.missionData) return undefined;
             return this.missionData[this.vehicleName];
         },
-        // Returns yaw of vehicle
-        yaw(): number | undefined {
-            if (!this.vehicleData) return undefined;
+        yaw() {
+            if (!this.vehicleData) return null;             // If vehicleData is null, return vehicleData for "yaw"
             return Math.round(this.vehicleData["yaw"]);
         },
     },
@@ -105,17 +110,21 @@ export default defineComponent({
     mounted() {
         this.initializeMissionData();
         this.initializeWidgetData();
-        this.interval = setInterval(this.updateVehicleData, 1000);
+        this.interval = setInterval(this.updateStatus, 1000);
     },
     //Initializes the missions data. Will return an error if data is invalid 
     methods: {
+        updateStatus() {
+          this.updateMissionERU(),
+          this.updateVehicleData()
+        },
         async initializeMissionData() {
-            try {
-                const response = await getMissionData("all");
-                this.missionData = response as MissionData;
-            } catch (error) {
-                console.log(error);
-            }
+          try {
+            const response = await getMissionData("all");
+            this.missionData = response as MissionData;
+          } catch (error) {
+            console.log(error);
+          }
         },
         //Initializes the process for getting Widget Data
         async initializeWidgetData() {
@@ -134,6 +143,14 @@ export default defineComponent({
             } catch (error) {
                 console.log(error);
             }
+        },
+        async updateMissionERU() {
+          try {
+            const response = await getMissionStages("ERU");
+            this.missionStage = response;
+          } catch (error) {
+            console.log(error);
+          }
         },
         //Sets the data of the widget
         setWidgetData(widgetType: string, value: any) {

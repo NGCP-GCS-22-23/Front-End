@@ -2,21 +2,17 @@
     <div>
         <b-button class="emergency-button" style="padding: 5px 10px;" @click="eModalShow = !eModalShow" variant="danger">
             STOP
-            <b-img style="width: 30px; color: #ffffff" src="/assets/stop.png"></b-img>
+            <b-img class="mb-1" style="width: 20px; color: #ffffff" src="/assets/stop.png"></b-img>
         </b-button>
         <b-modal centered v-model="eModalShow" hide-footer title="Emergency Stop">
-            <h3>Send Emergency Stop Command?</h3>
-            <b-row>
-                <b-col>
-                    <b-button variant="danger" block @click="eModalShow = !eModalShow">
-                        No
+            <h3 class="text-center">Are You Sure?</h3>
+            <b-row class="d-flex align-items-between">
+              <b-button variant="secondary" class="my-2" block @click="eModalShow = !eModalShow">
+                        Cancel stop
                     </b-button>
-                </b-col>
-                <b-col>
-                    <b-button variant="success" block @click="sendEmergencyStopCommand">
-                        Yes
+                    <b-button variant="danger" block @click="sendEmergencyStopCommand">
+                        Send emergency stop
                     </b-button>
-                </b-col>
             </b-row>
         </b-modal>
     </div>
@@ -32,23 +28,15 @@ export default {
     data() {
         return {
             eModalShow: false,
+            emergencyTitle: `${this.vehicleName} - Emergency Stop`
         };
     },
     methods: {
         sendEmergencyStopCommand() {
             this.eModalShow = !this.eModalShow;
-            const path = "http://localhost:5000/send";
-            let payload = {
-                id: "Stage Selection",
-                data: {
-                    current_stage: -1,
-                    stage_name: "Emergency Stop",
-                    vehicle_name: this.vehicleName,
-                    estop: true,
-                },
-            };
+            const path = `http://localhost:5000/api/manualOverride/${this.vehicleName}`;
             axios
-                .post(path, payload)
+                .post(path)
                 .then((response) => {
                     console.log(response);
                 })
@@ -61,7 +49,5 @@ export default {
 </script>
 
 <style scoped>
-.emergency-button {
-    height: 41px;
-}
+
 </style>

@@ -46,13 +46,13 @@
               <!-- Sidebar -->
               <Transition name="sideBar">
                 <b-col fill-height v-show="renderSidebar">
-                  <GeneralStage :generalStage="generalStage" />
                   <VehicleStatus
                     class="vehicle-status"
                     :vehicleName="'MAC'"
                     :vehicleIcon="macIcon"
                     :vehicleData="macData"
                     :missionData="missionData"
+                    :vehicleStages="macMission"
                   />
                   <VehicleStatus
                     class="vehicle-status"
@@ -60,6 +60,7 @@
                     :vehicleIcon="eruIcon"
                     :vehicleData="eruData"
                     :missionData="missionData"
+                    :vehicleStages="eruMission"
                   />
                   <VehicleStatus
                     class="vehicle-status"
@@ -67,6 +68,7 @@
                     :vehicleIcon="meaIcon"
                     :vehicleData="meaData"
                     :missionData="missionData"
+                    :vehicleStages="meaMission"
                   />
                 </b-col>
               </Transition>
@@ -93,7 +95,7 @@ import EmergencyStopAll from "@/components/MainPage/EmergencyStopAll.vue";
 import {
   getMissionData,
   getGeneralStage,
-  getVehicleData,
+  getVehicleData, getMissionStages
 } from "@/helpers/getData";
 
 export default {
@@ -108,7 +110,9 @@ export default {
   },
   data() {
     return {
-      generalStage: null,
+      macMission: null,
+      eruMission: null,
+      meaMission: null,
       macData: null,
       eruData: null,
       meaData: null,
@@ -136,10 +140,9 @@ export default {
   },
   methods: {
     updateStatus() {
-      this.updateGeneralStage();
-      this.updateMACData();
-      this.updateERUData();
-      this.updateMEAData();
+      this.updateMAC();
+      this.updateERU();
+      this.updateMEA();
     },
     async initializeMissionData() {
       try {
@@ -149,38 +152,30 @@ export default {
         console.log(error);
       }
     },
-    async updateGeneralStage() {
+    async updateMAC() {
       try {
-        const response = await getGeneralStage();
-        this.generalStage = response;
+        this.macMission = await getMissionStages("MAC");
+        this.macData = await getVehicleData("MAC");
       } catch (error) {
         console.log(error);
       }
     },
-    async updateMACData() {
+    async updateERU() {
       try {
-        const response = await getVehicleData("MAC");
-        this.macData = response;
+        this.eruMission = await getMissionStages("ERU");
+        this.eruData = await getVehicleData("ERU");
       } catch (error) {
         console.log(error);
       }
     },
-    async updateERUData() {
+    async updateMEA() {
       try {
-        const response = await getVehicleData("ERU");
-        this.eruData = response;
+        this.meaMission = await getMissionStages("MEA");
+        this.meaData = await getVehicleData("MEA");
       } catch (error) {
         console.log(error);
       }
-    },
-    async updateMEAData() {
-      try {
-        const response = await getVehicleData("MEA");
-        this.meaData = response;
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    }
   },
   beforeDestroy() {
     clearInterval(this.interval);
@@ -193,6 +188,10 @@ export default {
 </script>
 
 <style scoped>
+body {
+  overflow: hidden; /* Hide scrollbars */
+}
+
 .main-container {
   max-width: 100%;
   max-height: 100%;
@@ -203,11 +202,7 @@ export default {
   margin-top: 10px;
 }
 
-.main-row {
-  /* max-width: 100%;
-  max-height: 100%; */
-  /* background-color: aqua; */
-}
+
 
 .left-column {
   padding: 0;
